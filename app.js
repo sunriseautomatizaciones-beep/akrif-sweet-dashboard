@@ -72,12 +72,12 @@ function emptyRow(cols, msg = 'No hay registros todavía') {
 function setActiveNav(view) {
   document.querySelectorAll('[data-view]').forEach(el => {
     const active = el.dataset.view === view;
-    el.classList.toggle('bg-amber-400', active);
-    el.classList.toggle('text-gray-900', active);
+    el.classList.toggle('bg-[#2E6EA6]', active);
+    el.classList.toggle('text-white', active);
     el.classList.toggle('font-bold', active);
-    el.classList.toggle('text-slate-200', !active);
+    el.classList.toggle('text-[#A8D4F0]', !active);
   });
-  const titles = { albaranes: '📄 Albaranes', clientes: '👥 Clientes', productos: '📦 Productos' };
+  const titles = { albaranes: '📄 Albaranes', clientes: '👥 Clientes', productos: '📦 Productos', empresa: '🏢 Mi Empresa' };
   document.getElementById('view-title').textContent = titles[view] || '';
 }
 
@@ -87,6 +87,7 @@ function navigate(view) {
   if (view === 'albaranes') renderAlbaranes(vc);
   else if (view === 'clientes') renderClientes(vc);
   else if (view === 'productos') renderProductos(vc);
+  else if (view === 'empresa')   renderEmpresa(vc);
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -96,15 +97,15 @@ async function renderAlbaranes(vc) {
   vc.innerHTML = `
     <div class="flex items-center justify-between mb-4">
       <input id="albaran-search" type="text" placeholder="Buscar por cliente o código..."
-        class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-72 focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-72 focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       <button id="btn-nuevo-albaran"
-        class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
+        class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
         + Nuevo albarán
       </button>
     </div>
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+        <thead class="bg-[#D6EDFA] text-[#1A3A5C] text-xs uppercase tracking-wide">
           <tr>
             <th class="px-4 py-3 text-left">Código</th>
             <th class="px-4 py-3 text-left">Lote</th>
@@ -162,7 +163,7 @@ function renderAlbaranesRows(data) {
       <td class="px-4 py-3 text-slate-600">${formatFecha(r.fecha)}</td>
       <td class="px-4 py-3 text-center">
         ${r.pdf_url
-          ? `<a href="${r.pdf_url}" target="_blank" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-lg transition-colors">Ver PDF</a>`
+          ? `<a href="${r.pdf_url}" target="_blank" class="text-xs bg-[#EBF4FC] hover:bg-[#C5DFF0] text-[#1A3A5C] px-3 py-1 rounded-lg transition-colors">Ver PDF</a>`
           : `<button disabled class="text-xs bg-gray-100 text-gray-400 px-3 py-1 rounded-lg cursor-not-allowed">Ver PDF</button>`
         }
       </td>
@@ -195,7 +196,7 @@ async function modalNuevoAlbaran() {
 
     <div class="mb-4">
       <label class="block text-xs font-semibold text-slate-600 mb-1">Cliente <span class="text-red-500">*</span></label>
-      <select id="al-cliente" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+      <select id="al-cliente" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]">
         <option value="">Selecciona un cliente...</option>
         ${clienteOptions}
       </select>
@@ -204,7 +205,7 @@ async function modalNuevoAlbaran() {
     <div class="mb-4">
       <div class="flex items-center justify-between mb-2">
         <label class="text-xs font-semibold text-slate-600">Productos</label>
-        <button id="btn-add-producto" class="text-xs text-amber-600 hover:text-amber-700 font-semibold">+ Añadir producto</button>
+        <button id="btn-add-producto" class="text-xs text-[#2E6EA6] hover:text-[#1A3A5C] font-semibold">+ Añadir producto</button>
       </div>
       <div class="border border-gray-200 rounded-lg overflow-hidden">
         <table class="w-full text-xs">
@@ -226,23 +227,23 @@ async function modalNuevoAlbaran() {
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Lote</label>
         <input id="al-lote" type="text" placeholder="Opcional"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Observaciones</label>
         <input id="al-obs" type="text" placeholder="Opcional"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
     </div>
 
-    <div class="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-5 flex items-center justify-between">
+    <div class="bg-[#EBF4FC] border border-[#A8C8E8] rounded-lg px-4 py-3 mb-5 flex items-center justify-between">
       <span class="text-sm font-semibold text-slate-700">Total</span>
-      <span id="al-total" class="text-lg font-bold text-amber-700">0,00 €</span>
+      <span id="al-total" class="text-lg font-bold text-[#1A3A5C]">0,00 €</span>
     </div>
 
     <div class="flex gap-3 justify-end">
       <button class="modal-cancel px-4 py-2 text-sm text-slate-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Cancelar</button>
-      <button id="btn-submit-albaran" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Crear albarán</button>
+      <button id="btn-submit-albaran" class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Crear albarán</button>
     </div>
   `);
 
@@ -295,13 +296,13 @@ function addProductoRow(productoOptions) {
   tr.className = 'producto-row border-t border-gray-100';
   tr.innerHTML = `
     <td class="px-2 py-2">
-      <select class="prod-select w-full border border-gray-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400">
+      <select class="prod-select w-full border border-gray-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-[#2E6EA6]">
         <option value="">Seleccionar...</option>
         ${productoOptions}
       </select>
     </td>
     <td class="px-2 py-2">
-      <input type="number" min="1" value="1" class="prod-cant w-full border border-gray-200 rounded px-2 py-1 text-xs text-right focus:outline-none focus:ring-1 focus:ring-amber-400" />
+      <input type="number" min="1" value="1" class="prod-cant w-full border border-gray-200 rounded px-2 py-1 text-xs text-right focus:outline-none focus:ring-1 focus:ring-[#2E6EA6]" />
     </td>
     <td class="px-2 py-2">
       <input type="number" step="0.01" readonly class="prod-precio w-full bg-gray-50 border border-gray-200 rounded px-2 py-1 text-xs text-right text-slate-500 cursor-default" value="0.00" />
@@ -350,13 +351,13 @@ async function renderClientes(vc) {
   vc.innerHTML = `
     <div class="flex items-center justify-between mb-4">
       <span class="text-sm text-slate-500">Gestión de clientes</span>
-      <button id="btn-nuevo-cliente" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
+      <button id="btn-nuevo-cliente" class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
         + Nuevo cliente
       </button>
     </div>
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+        <thead class="bg-[#D6EDFA] text-[#1A3A5C] text-xs uppercase tracking-wide">
           <tr>
             <th class="px-4 py-3 text-left">ID</th>
             <th class="px-4 py-3 text-left">Nombre</th>
@@ -396,7 +397,7 @@ function renderClientesRows(data) {
           : '<span class="text-slate-400">—</span>'}
       </td>
       <td class="px-4 py-3 text-center">
-        <button class="btn-editar-cliente text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-lg transition-colors"
+        <button class="btn-editar-cliente text-xs bg-[#EBF4FC] hover:bg-[#C5DFF0] text-[#1A3A5C] px-3 py-1 rounded-lg transition-colors"
           data-id="${c.id_cliente}">Editar</button>
       </td>
     </tr>`).join('');
@@ -414,27 +415,27 @@ function clienteFormFields(c = {}) {
     <div class="grid grid-cols-2 gap-3">
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre <span class="text-red-500">*</span></label>
-        <input id="cl-nombre" value="${c.nombre || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="cl-nombre" value="${c.nombre || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Empresa</label>
-        <input id="cl-empresa" value="${c.empresa || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="cl-empresa" value="${c.empresa || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Teléfono <span class="text-red-500">*</span></label>
-        <input id="cl-telefono" value="${c.telefono || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="cl-telefono" value="${c.telefono || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Email</label>
-        <input id="cl-email" value="${c.email || ''}" type="email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="cl-email" value="${c.email || ''}" type="email" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div class="col-span-2">
         <label class="block text-xs font-semibold text-slate-600 mb-1">Dirección</label>
-        <input id="cl-direccion" value="${c.direccion || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="cl-direccion" value="${c.direccion || ''}" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Descuento (%)</label>
-        <input id="cl-descuento" value="${c.descuento || 0}" type="number" min="0" max="100" step="0.5" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="cl-descuento" value="${c.descuento || 0}" type="number" min="0" max="100" step="0.5" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
     </div>`;
 }
@@ -460,7 +461,7 @@ function modalEditarCliente(c) {
     ${clienteFormFields(c)}
     <div class="flex gap-3 justify-end mt-5">
       <button class="modal-cancel px-4 py-2 text-sm text-slate-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Cancelar</button>
-      <button id="btn-guardar-cliente" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Guardar cambios</button>
+      <button id="btn-guardar-cliente" class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Guardar cambios</button>
     </div>`);
 
   document.getElementById('btn-guardar-cliente').addEventListener('click', async () => {
@@ -487,7 +488,7 @@ function modalNuevoCliente() {
     ${clienteFormFields()}
     <div class="flex gap-3 justify-end mt-5">
       <button class="modal-cancel px-4 py-2 text-sm text-slate-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Cancelar</button>
-      <button id="btn-crear-cliente" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Crear cliente</button>
+      <button id="btn-crear-cliente" class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Crear cliente</button>
     </div>`);
 
   document.getElementById('btn-crear-cliente').addEventListener('click', async () => {
@@ -512,13 +513,13 @@ async function renderProductos(vc) {
   vc.innerHTML = `
     <div class="flex items-center justify-between mb-4">
       <span class="text-sm text-slate-500">Haz clic en el precio para editarlo directamente</span>
-      <button id="btn-nuevo-producto" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
+      <button id="btn-nuevo-producto" class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-4 py-2 rounded-lg text-sm transition-colors">
         + Nuevo producto
       </button>
     </div>
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <table class="w-full text-sm">
-        <thead class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wide">
+        <thead class="bg-[#D6EDFA] text-[#1A3A5C] text-xs uppercase tracking-wide">
           <tr>
             <th class="px-4 py-3 text-left">ID</th>
             <th class="px-4 py-3 text-left">Nombre</th>
@@ -548,15 +549,15 @@ function renderProductosRows(data) {
       <td class="px-4 py-3 font-mono text-xs text-slate-500">${p.id_producto || '—'}</td>
       <td class="px-4 py-3 font-medium text-slate-800">${p.nombre || '—'}</td>
       <td class="px-4 py-3 text-right">
-        <span class="precio-display tabular-nums font-medium text-slate-700 cursor-pointer hover:bg-amber-50 hover:text-amber-700 px-2 py-1 rounded transition-colors" title="Clic para editar">
+        <span class="precio-display tabular-nums font-medium text-slate-700 cursor-pointer hover:bg-amber-50 hover:text-[#1A3A5C] px-2 py-1 rounded transition-colors" title="Clic para editar">
           ${formatEuros(p.precio_unitario)}
         </span>
-        <input type="number" step="0.01" min="0" class="precio-input hidden w-24 border border-amber-400 rounded px-2 py-1 text-right text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+        <input type="number" step="0.01" min="0" class="precio-input hidden w-24 border border-amber-400 rounded px-2 py-1 text-right text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]"
           value="${p.precio_unitario}" data-original="${p.precio_unitario}" />
       </td>
       <td class="px-4 py-3 text-slate-600">${p.unidad || '—'}</td>
       <td class="px-4 py-3 text-center">
-        <button class="btn-editar-precio text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1 rounded-lg transition-colors"
+        <button class="btn-editar-precio text-xs bg-[#EBF4FC] hover:bg-[#C5DFF0] text-[#1A3A5C] px-3 py-1 rounded-lg transition-colors"
           data-id="${p.id_producto}">Editar precio</button>
       </td>
     </tr>`).join('');
@@ -628,15 +629,15 @@ function modalNuevoProducto() {
     <div class="grid grid-cols-2 gap-3 mb-5">
       <div class="col-span-2">
         <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre <span class="text-red-500">*</span></label>
-        <input id="pr-nombre" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="pr-nombre" type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Precio (€) <span class="text-red-500">*</span></label>
-        <input id="pr-precio" type="number" step="0.01" min="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+        <input id="pr-precio" type="number" step="0.01" min="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]" />
       </div>
       <div>
         <label class="block text-xs font-semibold text-slate-600 mb-1">Unidad <span class="text-red-500">*</span></label>
-        <select id="pr-unidad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
+        <select id="pr-unidad" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6]">
           <option value="">Seleccionar...</option>
           <option value="kg">kg</option>
           <option value="caja">caja</option>
@@ -647,7 +648,7 @@ function modalNuevoProducto() {
     </div>
     <div class="flex gap-3 justify-end">
       <button class="modal-cancel px-4 py-2 text-sm text-slate-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">Cancelar</button>
-      <button id="btn-crear-producto" class="bg-amber-400 hover:bg-amber-500 text-gray-900 font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Crear producto</button>
+      <button id="btn-crear-producto" class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">Crear producto</button>
     </div>`);
 
   document.getElementById('btn-crear-producto').addEventListener('click', async () => {
@@ -664,6 +665,127 @@ function modalNuevoProducto() {
       state.productos = [];
       navigate('productos');
     } catch { setLoading(btn, false); }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════
+// VISTA EMPRESA
+// ══════════════════════════════════════════════════════════════════
+function renderEmpresa(vc) {
+  const d = JSON.parse(localStorage.getItem('empresa_datos') || '{}');
+  const inp = (id, label, val = '', type = 'text', placeholder = '', required = false) => `
+    <div>
+      <label class="block text-xs font-semibold text-[#1A3A5C] mb-1">${label}${required ? ' <span class="text-red-400">*</span>' : ''}</label>
+      <input id="emp-${id}" type="${type}" value="${val}" placeholder="${placeholder}"
+        class="w-full border border-[#C5DFF0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6] bg-white" />
+    </div>`;
+
+  vc.innerHTML = `
+    <div class="max-w-3xl mx-auto">
+
+      <!-- DATOS GENERALES -->
+      <div class="bg-white rounded-xl border border-[#C5DFF0] p-6 mb-5">
+        <h2 class="text-sm font-bold text-[#1A3A5C] uppercase tracking-wide mb-4 flex items-center gap-2">
+          <span class="text-base">🏢</span> Datos generales
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          ${inp('nombre',    'Nombre de la empresa',  d.nombre    || '', 'text', 'Akrif Sweet S.L.', true)}
+          ${inp('nif',       'NIF / CIF',              d.nif       || '', 'text', 'B-12345678',        true)}
+          ${inp('web',       'Página web',             d.web       || '', 'url',  'https://...')}
+          ${inp('sector',    'Sector / Actividad',     d.sector    || '', 'text', 'Confitería y dulces')}
+        </div>
+      </div>
+
+      <!-- CONTACTO -->
+      <div class="bg-white rounded-xl border border-[#C5DFF0] p-6 mb-5">
+        <h2 class="text-sm font-bold text-[#1A3A5C] uppercase tracking-wide mb-4 flex items-center gap-2">
+          <span class="text-base">📞</span> Contacto
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          ${inp('email',     'Email principal',        d.email     || '', 'email', 'admin@akrif-sweet.com', true)}
+          ${inp('telefono',  'Teléfono',               d.telefono  || '', 'tel',   '+34 91 234 56 78',      true)}
+          ${inp('telefono2', 'Teléfono 2 (opcional)',  d.telefono2 || '', 'tel',   '+34 ...')}
+          ${inp('persona',   'Persona de contacto',    d.persona   || '', 'text',  'Nombre y apellidos')}
+        </div>
+      </div>
+
+      <!-- DIRECCIÓN FISCAL -->
+      <div class="bg-white rounded-xl border border-[#C5DFF0] p-6 mb-5">
+        <h2 class="text-sm font-bold text-[#1A3A5C] uppercase tracking-wide mb-4 flex items-center gap-2">
+          <span class="text-base">📍</span> Dirección fiscal
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            ${inp('calle',      'Calle y número',   d.calle    || '', 'text', 'Calle del Azúcar, 12', true)}
+          </div>
+          ${inp('cp',           'Código postal',    d.cp       || '', 'text', '28001',                true)}
+          ${inp('ciudad',       'Ciudad',           d.ciudad   || '', 'text', 'Madrid',               true)}
+          ${inp('provincia',    'Provincia',        d.provincia|| '', 'text', 'Madrid')}
+          ${inp('pais',         'País',             d.pais     || 'España', 'text', 'España')}
+        </div>
+      </div>
+
+      <!-- DATOS BANCARIOS -->
+      <div class="bg-white rounded-xl border border-[#C5DFF0] p-6 mb-5">
+        <h2 class="text-sm font-bold text-[#1A3A5C] uppercase tracking-wide mb-4 flex items-center gap-2">
+          <span class="text-base">🏦</span> Datos bancarios
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          ${inp('titular',  'Titular de la cuenta',  d.titular || '', 'text', 'Akrif Sweet S.L.')}
+          ${inp('iban',     'IBAN',                  d.iban    || '', 'text', 'ES00 0000 0000 0000 0000 0000')}
+          ${inp('bic',      'BIC / SWIFT',           d.bic     || '', 'text', 'CAIXESBBXXX')}
+          ${inp('banco',    'Entidad bancaria',      d.banco   || '', 'text', 'CaixaBank')}
+        </div>
+      </div>
+
+      <!-- CONFIGURACIÓN ALBARANES -->
+      <div class="bg-white rounded-xl border border-[#C5DFF0] p-6 mb-6">
+        <h2 class="text-sm font-bold text-[#1A3A5C] uppercase tracking-wide mb-4 flex items-center gap-2">
+          <span class="text-base">📄</span> Configuración de albaranes
+        </h2>
+        <div class="grid grid-cols-2 gap-4">
+          ${inp('prefijo',  'Prefijo numeración',    d.prefijo || 'ALB', 'text', 'ALB')}
+          ${inp('iva',      'IVA por defecto (%)',   d.iva     || '10',  'number', '10')}
+          <div class="col-span-2">
+            <label class="block text-xs font-semibold text-[#1A3A5C] mb-1">Texto pie de albarán</label>
+            <textarea id="emp-pie" rows="2" placeholder="Ej: Gracias por su confianza. Pago a 30 días."
+              class="w-full border border-[#C5DFF0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6] bg-white resize-none">${d.pie || ''}</textarea>
+          </div>
+          <div class="col-span-2">
+            <label class="block text-xs font-semibold text-[#1A3A5C] mb-1">Condiciones de pago</label>
+            <textarea id="emp-condiciones" rows="2" placeholder="Ej: Pago a 30/60/90 días desde la fecha de factura."
+              class="w-full border border-[#C5DFF0] rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2E6EA6] bg-white resize-none">${d.condiciones || ''}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÓN GUARDAR -->
+      <div class="flex justify-end">
+        <button id="btn-guardar-empresa"
+          class="bg-[#2E6EA6] hover:bg-[#1A3A5C] text-white font-semibold px-8 py-2.5 rounded-lg text-sm transition-colors">
+          Guardar cambios
+        </button>
+      </div>
+
+    </div>`;
+
+  document.getElementById('btn-guardar-empresa').addEventListener('click', () => {
+    const get = id => document.getElementById('emp-' + id)?.value?.trim() || '';
+    const datos = {
+      nombre: get('nombre'), nif: get('nif'), web: get('web'), sector: get('sector'),
+      email: get('email'), telefono: get('telefono'), telefono2: get('telefono2'), persona: get('persona'),
+      calle: get('calle'), cp: get('cp'), ciudad: get('ciudad'), provincia: get('provincia'), pais: get('pais'),
+      titular: get('titular'), iban: get('iban'), bic: get('bic'), banco: get('banco'),
+      prefijo: get('prefijo'), iva: get('iva'),
+      pie: document.getElementById('emp-pie')?.value?.trim() || '',
+      condiciones: document.getElementById('emp-condiciones')?.value?.trim() || '',
+    };
+    if (!datos.nombre || !datos.nif || !datos.email || !datos.telefono || !datos.calle || !datos.cp || !datos.ciudad) {
+      showToast('Completa los campos obligatorios (*)', 'error');
+      return;
+    }
+    localStorage.setItem('empresa_datos', JSON.stringify(datos));
+    showToast('Datos de empresa guardados', 'success');
   });
 }
 

@@ -5,52 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akrif Sweet — Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   { DEFAULT: '#2E6EA6', light: '#A8D4F0', dark: '#1A3A5C' },
+            sidebar:   { DEFAULT: '#1A3A5C', hover: '#234d7a', active: '#2E6EA6' },
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    /* Scrollbar personalizado */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    /* Prevent body scroll bleed through modals */
+    ::-webkit-scrollbar-track { background: #EBF4FC; }
+    ::-webkit-scrollbar-thumb { background: #A8C8E8; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2E6EA6; }
     body.modal-open { overflow: hidden; }
-
-    /* Truncate long text cells */
     td.truncate-cell { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   </style>
 </head>
-<body class="bg-gray-50 font-sans text-slate-800 antialiased">
+<body class="bg-[#EBF4FC] font-sans text-slate-800 antialiased">
 
-  <!-- ─── LAYOUT ─────────────────────────────────────────── -->
   <div class="flex h-screen overflow-hidden">
 
     <!-- SIDEBAR -->
-    <aside class="w-[200px] flex-shrink-0 bg-[#1E293B] flex flex-col select-none">
+    <aside class="w-[210px] flex-shrink-0 bg-[#1A3A5C] flex flex-col select-none shadow-xl">
+
       <!-- Logo -->
-      <div class="px-5 py-5 border-b border-slate-700">
-        <div class="text-amber-400 font-bold text-base leading-tight">🍬 Akrif Sweet</div>
-        <div class="text-slate-400 text-xs mt-0.5">Panel de administración</div>
+      <div class="px-4 py-4 border-b border-[#234d7a] flex flex-col items-center gap-2">
+        <img src="logo-akrif.png" alt="Akrif Sweet" class="w-28 h-auto object-contain" style="transform: rotate(270deg)" />
+        <div class="text-[#A8D4F0] text-[11px] tracking-wide">Panel de administración</div>
       </div>
 
       <!-- Nav -->
       <nav class="flex-1 py-4 px-3 flex flex-col gap-1">
         <button data-view="albaranes"
-          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-slate-200 hover:bg-slate-700">
+          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-[#A8D4F0] hover:bg-[#234d7a]">
           <span>📄</span> Albaranes
         </button>
         <button data-view="clientes"
-          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-slate-200 hover:bg-slate-700">
+          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-[#A8D4F0] hover:bg-[#234d7a]">
           <span>👥</span> Clientes
         </button>
         <button data-view="productos"
-          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-slate-200 hover:bg-slate-700">
+          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-[#A8D4F0] hover:bg-[#234d7a]">
           <span>📦</span> Productos
+        </button>
+        <button data-view="empresa"
+          class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 text-[#A8D4F0] hover:bg-[#234d7a]">
+          <span>🏢</span> Mi Empresa
         </button>
       </nav>
 
       <!-- Footer sidebar -->
-      <div class="px-5 py-4 border-t border-slate-700">
-        <div class="text-slate-500 text-xs">v1.0.0</div>
+      <div class="px-5 py-4 border-t border-[#234d7a]">
+        <div class="text-[#4a7fa8] text-xs">v1.0.0</div>
       </div>
     </aside>
 
@@ -58,10 +69,10 @@
     <main class="flex-1 flex flex-col overflow-hidden">
 
       <!-- Header -->
-      <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between flex-shrink-0">
-        <h1 id="view-title" class="text-lg font-bold text-slate-800">📄 Albaranes</h1>
-        <div class="flex items-center gap-2 text-xs text-slate-400">
-          <span class="inline-block w-2 h-2 rounded-full bg-green-400"></span>
+      <header class="bg-white border-b border-[#C5DFF0] px-6 py-4 flex items-center justify-between flex-shrink-0 shadow-sm">
+        <h1 id="view-title" class="text-lg font-bold text-[#1A3A5C]">📄 Albaranes</h1>
+        <div class="flex items-center gap-2 text-xs text-[#2E6EA6]">
+          <span class="inline-block w-2 h-2 rounded-full bg-[#2E6EA6]"></span>
           Panel interno
         </div>
       </header>
@@ -74,17 +85,15 @@
     </main>
   </div>
 
-  <!-- ─── MODAL OVERLAY ──────────────────────────────────── -->
-  <div id="modal-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+  <!-- MODAL -->
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-[#1A3A5C]/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
     <div id="modal-box" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6"></div>
   </div>
 
-  <!-- ─── TOAST CONTAINER ────────────────────────────────── -->
+  <!-- TOASTS -->
   <div id="toast-container" class="fixed top-5 right-5 z-[60] flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ─── SCRIPTS ────────────────────────────────────────── -->
   <script src="api.js"></script>
   <script src="app.js"></script>
-
 </body>
 </html>
